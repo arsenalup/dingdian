@@ -28,4 +28,17 @@ class Novel(db.model):
     chapters = db.relationship('Chapter', backref='book', lazy='dynamic')
 
 
-class
+class Chapter(db.model):
+    __tablename__ = 'chapters'
+    id = db.Column(db.Integer, primary_key=True)
+    chapter = db.Column(db.String(64))
+    chapter_url = db.Column(db.String, index=True)
+    article = db.relationship('Article', backref='chapter', lazy='dynamic')
+    book_id = db.Column(db.Integer, db.ForeignKey('novels.id'))
+
+
+class Article(db.model):
+    __tablename__ = 'articles'
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.Text)
+    chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id'))
