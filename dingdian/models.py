@@ -1,7 +1,7 @@
 from dingdian import db
 
 #search模型
-class Search(db.model):
+class Search(db.Model):
     #设置表格名
     __tablename__ = 'searches'
     id = db.Column(db.Integer, primary_key=True)
@@ -13,7 +13,7 @@ class Search(db.model):
 
 
 #Novel模型
-class Novel(db.model):
+class Novel(db.Model):
     __tablename__ = 'novels'
     id = db.Column(db.Integer, primary_key=True)
     book_name = db.Column(db.String(64), index=True)
@@ -24,11 +24,11 @@ class Novel(db.model):
     last_update = db.Column(db.String(64), nullable=True)
     profile = db.Column(db.Text, nullable=True)
     #db.foreignkey 外键
-    search_name = db.Column(db.String, db.ForeignKey('searches.search_name'))
     chapters = db.relationship('Chapter', backref='book', lazy='dynamic')
+    search_name = db.Column(db.String, db.ForeignKey('searches.search_name'))
 
 
-class Chapter(db.model):
+class Chapter(db.Model):
     __tablename__ = 'chapters'
     id = db.Column(db.Integer, primary_key=True)
     chapter = db.Column(db.String(64))
@@ -37,8 +37,9 @@ class Chapter(db.model):
     book_id = db.Column(db.Integer, db.ForeignKey('novels.id'))
 
 
-class Article(db.model):
+class Article(db.Model):
     __tablename__ = 'articles'
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text)
     chapter_id = db.Column(db.Integer, db.ForeignKey('chapters.id'))
+

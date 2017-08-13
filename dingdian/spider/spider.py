@@ -49,8 +49,8 @@ class DdSpider():
                 'style':style.strip(),
                 'time':tim.strip(),
             }
-            print(data)
-            # yield data
+            # print(data)
+            yield data
 
 
     def get_chapter(self, url):
@@ -64,8 +64,8 @@ class DdSpider():
                 'url':str(url) + chapter_url,
                 'chapter':chapter,
             }
-            # yield chapter
-            print(data)
+            yield chapter
+            # print(data)
 
     def get_article(self, url):
         resp = self.parse_url(url)
@@ -73,7 +73,7 @@ class DdSpider():
         content = html.xpath('//*[@id="content"]/text()')
         return '<br>'.join(content)
 
-a= DdSpider()
-a.get_index_result('盘龙')
+# a= DdSpider()
+# a.get_index_result('盘龙')
 # print(a.get_article('http://www.23us.cc/html/4/4579/6912721.html'))
 # a.get_chapter('http://www.23us.cc/html/4/4579/')

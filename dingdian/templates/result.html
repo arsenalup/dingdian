@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+搜索结果
+{% endblock %}
+
+{% block content %}
+<h3 align="center">{{search}}的搜索结果</h3><hr>
+{% for i in books %}
+<ul class="list-group">
+    <li class="list-group-item">
+        <table>
+            <tr>
+                <td>
+                    <img class="img" src="{{i.book_img}}">
+                </td>
+                <td>
+                    <a href="{{url_for('main.chapter',book_id=i.id)}}">{{i.book_name}}</a>
+                    <p><b>简介：</b>{{i.profile | safe}}</p>
+                    <p><b>作者：</b>{{i.author}}</p>
+                    <p><b>类型：</b>{{i.style}}</p>
+                    <p><b>更新时间：</b>{{i.last_update}}</p>
+                </td>
+            </tr>
+        </table>
+    </li>
+</ul>
+{% endfor %}
+{% endblock %}
