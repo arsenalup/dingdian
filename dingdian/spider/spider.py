@@ -64,7 +64,7 @@ class DdSpider():
                 'url':str(url) + chapter_url,
                 'chapter':chapter,
             }
-            yield chapter
+            yield data
             # print(data)
 
     def get_article(self, url):

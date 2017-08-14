@@ -88,7 +88,35 @@ def content(chapter_id):
     chapter = Chapter.query.filter_by(id=chapter_id).first()
     article2 = Article(content=spider.get_article(chapter.chapter_url), chapter_id=chapter_id)
     db.session.add(article2)
-    return  render_template('atricle.html', chapter=chapter, article=article2, book_id=book_id)
+    return  render_template('article.html', chapter=chapter, article=article2, book_id=book_id)
+
+
+@main.route('/next/<int:chapter_id>')
+def next(chapter_id):
+    chapter = Chapter.query.filter_by(id=chapter_id).first()
+    book = Novel.query.filter_by(id=chapter.book_id).first()
+    all_chapters = [i for i in book.chapters]
+    #all_chapters 是章节集合
+    if all_chapters[-1] != chapter:
+        #下一章节对应的id
+        next_chapter = all_chapters[all_chapters.index(chapter)+1]
+        return redirect(url_for('main.content', chapter_id=next_chapter))
+    else:
+        flash('已经是最后一章了')
+        return redirect(url_for('main.content', chapter_id=chapter_id))
+
+
+@main.route('/prev/<int:chapter_id>')
+def prev(chapter_id):
+    chapter = Chapter.query.filter_by(id=chapter_id).first()
+    book = Novel.query.filter_by(id=chapter.book_id).first()
+    all_chapters = [i for i in book.chapters]
+    if all_chapters[0] != chapter:
+        next_chapter = all_chapters[all_chapters.index(chapter)-1]
+        return redirect(url_for('main.content', chapter_id=next_chapter))
+    else:
+        flash('没有上一章了')
+        return redirect(url_for('main.content', chapter_id=chapter_id))
 
 
 
